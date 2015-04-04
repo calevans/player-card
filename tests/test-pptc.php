@@ -80,7 +80,7 @@ a:3:{s:8:"duration";s:8:"00:16:30";s:8:"subtitle";s:35:"Interview with Michelang
 		$this->assertContains('<meta name="twitter:title" content="' .$this->options['title'] . '">',$card);
 		$this->assertContains('<meta name="twitter:description" content="' .$post_options['post']->post_title . '">',$card);
 		$this->assertContains('<meta name="twitter:image" content="' .$this->options['default_graphic'] . '">',$card);
-		$this->assertContains('<meta name="twitter:player" content="http://example.org/wp-content/plugins/Users/cal/Projects/player-card/container.php?a=' .urlencode($audio_file) . '">',$card);
+		$this->assertContains('<meta name="twitter:player" content="' . plugins_url('player-card') . '/container.php?a=' .urlencode($audio_file) . '">',$card);
 		$this->assertContains('<meta name="twitter:player:width" content="' .$this->options['player_width'] . '">',$card);
 		$this->assertContains('<meta name="twitter:player:height" content="' .$this->options['player_height'] . '">',$card);
 

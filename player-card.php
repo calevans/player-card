@@ -86,7 +86,7 @@ Class PowerpressPlayerCard {
 		$returnValue .= '<meta name="twitter:title" content="'. $plugin_options['title'] .'">' ."\n";
 		$returnValue .= '<meta name="twitter:description" content="' . $post['post']->post_title . '">' ."\n";
 		$returnValue .= '<meta name="twitter:image" content="'. $plugin_options['default_graphic'] .'">' ."\n";
-		$returnValue .= '<meta name="twitter:player" content="' . plugin_dir_url( __FILE__ ) . 'container.php?a=' . urlencode($media_file) . '">' ."\n";
+		$returnValue .= '<meta name="twitter:player" content="' . plugins_url('player-card') . '/container.php?a=' . urlencode($media_file) . '">' ."\n";
 		$returnValue .= '<meta name="twitter:player:width" content="'. $plugin_options['player_width'] .'">' ."\n";
 		$returnValue .= '<meta name="twitter:player:height" content="'. $plugin_options['player_height'] .'">' ."\n";
 		$returnValue .= "<!-- End Cal's Twitter Player Card Insert-a-tron -->\n\n";
