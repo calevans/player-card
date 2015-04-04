@@ -4,8 +4,8 @@ Plugin Name: Player-card
 Version: 1.0
 Description: Add-on to Blubrry PowerPress to add a twitter player card on any post that includes an enclosure.
 Author: Cal Evans
-Author URI: http://blogcalevans.com
-Plugin URI: http://blogcalevans.com
+Author URI: http://blog.calevans.com
+Plugin URI: http://blog.calevans.com
 Text Domain: player-card
 Domain Path: /languages
 */
