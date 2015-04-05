@@ -67,7 +67,9 @@ Class PowerpressPlayerCard {
 
 		$plugin_options = get_option('pppc_plugin_options');
 		
-		if (empty($plugin_options)) {
+		if (empty($plugin_options) or 
+			(isset($plugin_options['twitter_account']) and empty($plugin_options['twitter_account']))) {
+			echo "\n<!-- Plugin Not properly setup -->\n";			
 			return;
 		}
 		
