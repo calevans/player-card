@@ -12,9 +12,12 @@ Description: Add-on to [Blubrry PowerPress](https://wordpress.org/plugins/powerp
 
 Author: Cal Evans
 
-Author URI: http://blog.calevans.com
+Author URI: http://blog.calevans.com/2015/04/04/twitter-player-card-for-blubrry-powerpress-wordpress-plugin/
 
-Plugin URI: http://blog.calevans.com
+Copyright: 2015 E.I.C.C., Inc.
+
+License: MIT
+
 
 ## Instructions
 
