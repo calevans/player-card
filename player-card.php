@@ -149,7 +149,7 @@ Class PowerpressPlayerCard {
 		} else if ( $media_type === 'video/mp4' ) {
 			$returnValue = 'video';	
 		} 
-echo "\n<!-- media type = " . $returnValue . "-->";
+
 		return $returnValue;
 	}
 
