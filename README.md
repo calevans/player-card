@@ -6,7 +6,7 @@ Cal Evans <cal@calevans.com>
 
 Plugin Name: Player-card
 
-Version: 1.0
+Version: 1.1
 
 Description: Add-on to [Blubrry PowerPress](https://wordpress.org/plugins/powerpress/) to add a [Twitter Player Card](https://dev.twitter.com/cards/overview) on any post that includes an enclosure.
 
@@ -37,3 +37,7 @@ License: MIT
 
 **Everything has to be https**. This includes your default graphic and the media file. PowerPress won't allow you to enter an https url for your media file. This plugin will force it to https. It is your responsibility to make sure that both versions are available.
 
+## Versions
+
+- 1.0 - Inital Release
+- 1.1 - Added support for both audio and video
