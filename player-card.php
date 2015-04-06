@@ -65,6 +65,8 @@ Class PowerpressPlayerCard {
 			return;
 		}
 
+		$media_file_type = $this->identify_media_type($post);
+
 		$plugin_options = get_option('pppc_plugin_options');
 		
 		if (empty($plugin_options) or 
@@ -73,13 +75,13 @@ Class PowerpressPlayerCard {
 			return;
 		}
 		
-		$card = $this->buildCard($plugin_options, $media_file, $post);
+		$card = $this->buildCard($plugin_options, $media_file, $post,media_file_type);
 		echo $card;
 
 		return;
 	}
 
-	public function buildCard( $plugin_options, $media_file, $post ) {
+	public function buildCard( $plugin_options, $media_file, $post, $media_file_type ) {
 
 		$returnValue = '';
 		$returnValue .= "\n<!-- Begin Cal's Twitter Player Card Insert-a-tron -->\n";
@@ -88,7 +90,7 @@ Class PowerpressPlayerCard {
 		$returnValue .= '<meta name="twitter:title" content="'. $plugin_options['title'] .'">' ."\n";
 		$returnValue .= '<meta name="twitter:description" content="' . $post['post']->post_title . '">' ."\n";
 		$returnValue .= '<meta name="twitter:image" content="'. $plugin_options['default_graphic'] .'">' ."\n";
-		$returnValue .= '<meta name="twitter:player" content="' . plugins_url('player-card') . '/container.php?a=' . urlencode($media_file) . '">' ."\n";
+		$returnValue .= '<meta name="twitter:player" content="' . plugins_url('player-card') . '/container.php?a=' . urlencode($media_file) . '&t=' . $media_file_type .'">' ."\n";
 		$returnValue .= '<meta name="twitter:player:width" content="'. $plugin_options['player_width'] .'">' ."\n";
 		$returnValue .= '<meta name="twitter:player:height" content="'. $plugin_options['player_height'] .'">' ."\n";
 		$returnValue .= "<!-- End Cal's Twitter Player Card Insert-a-tron -->\n\n";
@@ -123,12 +125,32 @@ Class PowerpressPlayerCard {
 
 	public function locate_media_file($post) {
 
+		$returnValue = '';
+
 		if (!empty($post['enclosure'])) {
-			$audio_file = explode("\n",$post['enclosure'])[0];
-			$audio_file = str_replace('http://', 'https://', $audio_file);
+			$returnValue = explode("\n",$post['enclosure'])[0];
+			$returnValue = str_replace('http://', 'https://', $returnValue);
 		}
 
-		return $audio_file;
+		return $returnValue;
+	}
+
+
+	public function identify_media_type($post) {
+
+		$returnValue = 'audio';
+
+		if (!empty($post['enclosure'])) {
+			$media_type = explode("\n",$post['enclosure'])[2];
+		}
+
+		if ( $media_type === 'audio/mpeg' ) { 
+			$returnValue = 'audio';
+		} else if ( $media_type === 'video/mp4' ) {
+			$returnValue = 'video';	
+		} 
+
+		return $returnValue;
 	}
 
 
