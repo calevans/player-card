@@ -75,7 +75,7 @@ Class PowerpressPlayerCard {
 			return;
 		}
 		
-		$card = $this->buildCard($plugin_options, $media_file, $post,media_file_type);
+		$card = $this->buildCard($plugin_options, $media_file, $post, $media_file_type);
 		echo $card;
 
 		return;
@@ -149,7 +149,7 @@ Class PowerpressPlayerCard {
 		} else if ( $media_type === 'video/mp4' ) {
 			$returnValue = 'video';	
 		} 
-
+echo "\n<!-- media type = " . $returnValue . "-->";
 		return $returnValue;
 	}
 
