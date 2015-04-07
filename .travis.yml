@@ -7,7 +7,6 @@ php:
 env:
     - WP_VERSION=latest WP_MULTISITE=0
     - WP_VERSION=latest WP_MULTISITE=1
-    - CODECLIMATE_REPO_TOKEN=f99bfc2e4433450c19864ef3d484bc7d608e3a0062733d5b2a0236f1cc0144a7
 
 install:
     - composer require codeclimate/php-test-reporter
@@ -20,6 +19,6 @@ script:
     - phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
-    - CODECLIMATE_REPO_TOKEN=${CODECLIMATE_REPO_TOKEN} vendor/bin/test-reporter --stdout > codeclimate.json
+    - CODECLIMATE_REPO_TOKEN=f99bfc2e4433450c19864ef3d484bc7d608e3a0062733d5b2a0236f1cc0144a7 vendor/bin/test-reporter --stdout > codeclimate.json
     - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
 
