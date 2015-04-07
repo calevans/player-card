@@ -43,6 +43,7 @@ Class PowerpressPlayerCard {
 		add_action( 'wp_head', [$this,'main'] );
 		add_action( 'admin_enqueue_scripts', [$this,'enqueue_scripts'] );
         add_action( 'admin_menu', [$this,'admin_menu'],11 );
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), [$this,'add_action_links'] );
 		return;		
 	}
 
@@ -220,5 +221,12 @@ Class PowerpressPlayerCard {
 		return;
 	}
 
+	function add_action_links ( $links ) {
+		 $mylinks = array(
+		 '<a href="' . admin_url( 'options-general.php?page=player-card/player-card.php' ) . '">Settings</a>',
+		 );
+		return array_merge( $links, $mylinks );
+	}
 }
+
 
