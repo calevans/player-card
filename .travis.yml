@@ -16,7 +16,11 @@ install:
 before_script:
     - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
-script: phpunit --coverage-clover build/logs/clover.xml
-script: CODECLIMATE_REPO_TOKEN=${CODECLIMATE_REPO_TOKEN} php ./vendor/bin/test-reporter
+script:
+    - phpunit --coverage-clover build/logs/clover.xml
 
+after_script:
+    - after_script:
+    - CODECLIMATE_REPO_TOKEN=${CODECLIMATE_REPO_TOKEN} vendor/bin/test-reporter --stdout > codeclimate.json
+    - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
 
