@@ -223,7 +223,7 @@ Class PowerpressPlayerCard {
 
 	function add_action_links ( $links ) {
 		 $mylinks = array(
-		 '<a href="' . admin_url( 'options-general.php?page=player-card/player-card.php' ) . '">Settings</a>',
+		 '<a href="' . admin_url( 'admin.php?page=player-card/player-card.php' ) . '">Settings</a>',
 		 );
 		return array_merge( $links, $mylinks );
 	}
