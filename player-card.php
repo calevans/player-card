@@ -164,7 +164,7 @@ Class PowerpressPlayerCard {
 			$returnValue['post']      = $wp_query->posts[0];
 			$returnValue['enclosure'] = get_post_meta($wp_query->posts[0]->ID, 'enclosure');
 
-			if (is_array($returnValue['enclosure'])) {
+			if (is_array($returnValue['enclosure']) and !empty($returnValue['enclosure'])) {
 				$returnValue['enclosure'] = $returnValue['enclosure'][0];
 			}
 

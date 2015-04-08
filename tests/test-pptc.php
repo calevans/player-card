@@ -95,26 +95,78 @@ a:3:{s:8:"duration";s:8:"00:16:30";s:8:"subtitle";s:25:"Interview with Matt Fros
 		global $wp_query;
 		$media_types = array_keys($this->post_id);
 		foreach ($media_types as $type) {
-			$wp_query = new WP_Query( 'p='.$this->post_id[$type]);
-
-			$pppc = new PowerpressPlayerCard();
-			$post_options = $pppc->fetch_post_options();
-			$audio_file=$pppc->locate_media_file($post_options);
-			$options = $pppc->load_options();
-			$media_type = $pppc->identify_media_type($post_options);
-			$card=$pppc->buildCard( $options, $audio_file, $post_options, $media_type );
-			$this->assertContains('<meta name="twitter:card" content="player">',$card);
-			$this->assertContains('<meta name="twitter:site" content="' .$this->options['twitter_account'] . '">',$card);
-			$this->assertContains('<meta name="twitter:title" content="' .$this->options['title'] . '">',$card);
-			$this->assertContains('<meta name="twitter:description" content="' .$post_options['post']->post_title . '">',$card);
-			$this->assertContains('<meta name="twitter:image" content="' .$this->options['default_graphic'] . '">',$card);
-			$this->assertContains('<meta name="twitter:player" content="' . plugins_url('player-card') . '/container.php?a=' .urlencode($audio_file) . '&t=' . $type . '">',$card);
-			$this->assertContains('<meta name="twitter:player:width" content="' .$this->options['player_width'] . '">',$card);
-			$this->assertContains('<meta name="twitter:player:height" content="' .$this->options['player_height'] . '">',$card);
+			$card=$this->create_card( $type );
+			$this->check_card( $card,$type );
 		}
 
 		return;
 	}
 
+	function test_main() {
+		global $wp_query;
+
+		// Everything works fine
+		$wp_query = new WP_Query( 'p='.$this->post_id['audio']);
+		ob_start();
+		$pppc = new PowerpressPlayerCard();
+		$pppc->main();
+		$card = ob_get_contents();
+		ob_end_clean();
+		$this->create_card('audio');
+		$this->check_card($card,'audio');
+
+		// No Post failure
+		$wp_query = new WP_Query( 'p=-1');
+		ob_start();
+		$pppc = new PowerpressPlayerCard();
+		$pppc->main();
+		$card = ob_get_contents();
+		ob_end_clean();
+		$this->assertEquals('<!-- No Post -->',trim($card));
+
+		// No media failure
+		$post = array('post_author' => $this->user,'post_status' => 'publish','post_title' => 'None :' .rand_str(),'post_type' => 'post','post_content' => rand_str() );
+    	$post_id = $this->factory->post->create( $post );
+		$wp_query = new WP_Query( 'p='.$post_id);
+		ob_start();
+		$pppc = new PowerpressPlayerCard();
+		$pppc->main();
+		$card = ob_get_contents();
+		ob_end_clean();
+		$this->assertEquals('<!-- No Media File -->',trim($card));
+		return;
+	}
+
+	function create_card($media_type) {
+		$returnValue = '';
+		global $wp_query;
+
+		$wp_query = new WP_Query( 'p='.$this->post_id[$media_type]);
+
+		$pppc         = new PowerpressPlayerCard();
+		$post_options = $pppc->fetch_post_options();
+		$audio_file   = $pppc->locate_media_file($post_options);
+		$options      = $pppc->load_options();
+		$media_type   = $pppc->identify_media_type($post_options);
+		$returnValue  =$pppc->buildCard( $options, $audio_file, $post_options, $media_type );
+
+		return $returnValue;
+	}
+
+	function check_card($card,$type) {
+		$fake_card = $this->create_card($type);
+		$fake_card_array = explode("\n",$fake_card);
+
+		$this->assertContains($fake_card_array[2],$card);
+		$this->assertContains($fake_card_array[3],$card);
+		$this->assertContains($fake_card_array[4],$card);
+		$this->assertContains($fake_card_array[5],$card);
+		$this->assertContains($fake_card_array[6],$card);
+		$this->assertContains($fake_card_array[7],$card);
+		$this->assertContains($fake_card_array[8],$card);
+		$this->assertContains($fake_card_array[9],$card);
+
+		return;		
+	}
 }
 
