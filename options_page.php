@@ -1,4 +1,4 @@
-<form method="post" action="options-general.php?page=<?php echo plugins_url('player-card/player-card.php');?>">
+<form method="post" action="admin.php?page=<?php echo plugin_basename('player-card/player-card.php');?>">
 
 <h2><?php _e('PowerPress Twitter Player Card', 'pppc'); ?></h2>
 <label for="twitter_account">Twitter Account : </label>
