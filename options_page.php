@@ -1,4 +1,8 @@
-<form method="post" action="admin.php?page=<?php echo plugin_basename('player-card/player-card.php');?>">
+<?php
+// figure out where we are stored
+$location = explode('/',plugin_basename(__FILE__))[0].'/player-card.php';
+?>
+<form method="post" action="admin.php?page=<?php echo $location;?>">
 
 <h2><?php _e('PowerPress Twitter Player Card', 'pppc'); ?></h2>
 <label for="twitter_account">Twitter Account : </label>

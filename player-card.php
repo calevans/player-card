@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Player-card
-Version: 1.1.1
+Version: 1.1.2
 Description: Add-on to Blubrry PowerPress to add a twitter player card on any post that includes an enclosure.
 Author: Cal Evans
 Author URI: http://blog.calevans.com
@@ -83,6 +83,7 @@ Class PowerpressPlayerCard {
 	}
 
 	public function buildCard( $plugin_options, $media_file, $post, $media_file_type ) {
+		$location = explode('/',plugin_basename(__FILE__))[0];
 
 		$returnValue = '';
 		$returnValue .= "\n<!-- Begin Cal's Twitter Player Card Insert-a-tron -->\n";
@@ -91,7 +92,7 @@ Class PowerpressPlayerCard {
 		$returnValue .= '<meta name="twitter:title" content="'. $plugin_options['title'] .'">' ."\n";
 		$returnValue .= '<meta name="twitter:description" content="' . $post['post']->post_title . '">' ."\n";
 		$returnValue .= '<meta name="twitter:image" content="'. $plugin_options['default_graphic'] .'">' ."\n";
-		$returnValue .= '<meta name="twitter:player" content="' . plugins_url('player-card') . '/container.php?a=' . urlencode($media_file) . '&t=' . $media_file_type .'">' ."\n";
+		$returnValue .= '<meta name="twitter:player" content="' . plugins_url($location) . '/container.php?a=' . urlencode($media_file) . '&t=' . $media_file_type .'">' ."\n";
 		$returnValue .= '<meta name="twitter:player:width" content="'. $plugin_options['player_width'] .'">' ."\n";
 		$returnValue .= '<meta name="twitter:player:height" content="'. $plugin_options['player_height'] .'">' ."\n";
 		$returnValue .= "<!-- End Cal's Twitter Player Card Insert-a-tron -->\n\n";
@@ -223,7 +224,7 @@ Class PowerpressPlayerCard {
 
 	function add_action_links ( $links ) {
 		 $mylinks = array(
-		 '<a href="' . admin_url( 'admin.php?page=player-card/player-card.php' ) . '">Settings</a>',
+		 '<a href="' . admin_url( 'admin.php?page='.plugin_basename(__FILE__) ) . '">Settings</a>',
 		 );
 		return array_merge( $links, $mylinks );
 	}
