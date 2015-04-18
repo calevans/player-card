@@ -46,3 +46,4 @@ License: MIT
 - 1.1.1 - Fixed errors introduced with the reorg for testing.
 - 1.1.2 - Fixed error where downloading form github added -master to the directory name and this caused the player to not be found and the settings save to redirect to the wrong page.
 - 1.1.3 - Removed the static methods. Increased the test covereage.
+
