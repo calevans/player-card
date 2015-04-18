@@ -115,11 +115,11 @@ Class PowerpressPlayerCard {
 	}
 
 
-	public static function load_options() {
+	public function load_options() {
 	    $returnValue = get_option($this->option_key);
 
 	    if (empty($returnValue)) {
-    		$this->init_option();
+    		$returnValue = $this->init_option();
 	    }
 
 	    return $returnValue; 
@@ -206,7 +206,7 @@ Class PowerpressPlayerCard {
 	}
 
 
-	public static function activate() {
+	public function activate() {
 
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';

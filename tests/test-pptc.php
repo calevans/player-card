@@ -150,7 +150,7 @@ a:3:{s:8:"duration";s:8:"00:16:30";s:8:"subtitle";s:25:"Interview with Matt Fros
 		$this->assertEquals($options['player_width'],20);
 		$this->assertEquals($options['default_graphic'],'');
 
-
+		return;
 	}
 
 
