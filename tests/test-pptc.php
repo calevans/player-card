@@ -137,6 +137,23 @@ a:3:{s:8:"duration";s:8:"00:16:30";s:8:"subtitle";s:25:"Interview with Matt Fros
 		return;
 	}
 
+	function test_activate() {
+		$pppc = new PowerpressPlayerCard();
+		delete_option($pppc->option_key);
+		$pppc->activate();
+		$options = get_option($pppc->option_key);
+
+		$this->assertEquals(count($options),5);
+		$this->assertEquals($options['twitter_account'],'');
+		$this->assertEquals($options['title'],'');
+		$this->assertEquals($options['player_height'],150);
+		$this->assertEquals($options['player_width'],20);
+		$this->assertEquals($options['default_graphic'],'');
+
+
+	}
+
+
 	function create_card($media_type) {
 		$returnValue = '';
 		global $wp_query;
@@ -168,5 +185,6 @@ a:3:{s:8:"duration";s:8:"00:16:30";s:8:"subtitle";s:25:"Interview with Matt Fros
 
 		return;		
 	}
+
 }
 

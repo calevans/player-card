@@ -10,8 +10,8 @@ Text Domain: player-card
 Domain Path: /languages
 */
 
-register_activation_hook( __FILE__, ['PowerpressPlayerCard','activate'] );
 $pppc = new PowerpressPlayerCard();
+register_activation_hook( __FILE__, [$pppc,'activate'] );
 
 
 /*
@@ -24,8 +24,10 @@ if (isset($_POST['action']) and $_POST['action'] === 'update') {
 
 Class PowerpressPlayerCard {
 
+	public $option_key = 'pppc_plugin_options';
 
 	public function __construct() {
+
 		if ( ! function_exists( 'is_plugin_inactive' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
@@ -68,7 +70,7 @@ Class PowerpressPlayerCard {
 
 		$media_file_type = $this->identify_media_type($post);
 
-		$plugin_options = get_option('pppc_plugin_options');
+		$plugin_options = get_option($this->option_key);
 		
 		if (empty($plugin_options) or 
 			(isset($plugin_options['twitter_account']) and empty($plugin_options['twitter_account']))) {
@@ -113,11 +115,11 @@ Class PowerpressPlayerCard {
 	}
 
 
-	public function load_options() {
-	    $returnValue = get_option('pppc_plugin_options');
+	public static function load_options() {
+	    $returnValue = get_option($this->option_key);
 
 	    if (empty($returnValue)) {
-    		Self::init_option();
+    		$this->init_option();
 	    }
 
 	    return $returnValue; 
@@ -193,7 +195,7 @@ Class PowerpressPlayerCard {
 		$current_options['player_width']    = filter_input(INPUT_POST, 'player_width', FILTER_SANITIZE_NUMBER_INT);
 		$current_options['default_graphic'] = filter_input(INPUT_POST, 'default_graphic', FILTER_SANITIZE_STRING);
 
-		update_option('pppc_plugin_options',$current_options);
+		update_option($this->option_key,$current_options);
 	}
 
 	public function enqueue_scripts() {
@@ -216,11 +218,12 @@ Class PowerpressPlayerCard {
 			exit('<div class="error"><p>This plugin requires Blubrry PowerPress to operate. Please install that first and then activate this plugin.</p></div>');
 		}
 
-		$plugin_options = Self::load_options('pppc_plugin_options');
-		update_option('pppc_plugin_options',$plugin_options);
+		$plugin_options = $this->load_options();
+		update_option($this->option_key,$plugin_options);
 
 		return;
 	}
+
 
 	function add_action_links ( $links ) {
 		 $mylinks = array(
@@ -228,6 +231,7 @@ Class PowerpressPlayerCard {
 		 );
 		return array_merge( $links, $mylinks );
 	}
+
 }
 
 
