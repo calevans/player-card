@@ -34,7 +34,7 @@ Class PowerpressPlayerCard {
 
 
 		if (is_plugin_inactive('powerpress/powerpress.php')) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
+			deactivate_plugins( $this->determine_plugin_location() );
 		}
 
 		$this->init();		
@@ -230,6 +230,12 @@ Class PowerpressPlayerCard {
 		 '<a href="' . admin_url( 'admin.php?page='.plugin_basename(__FILE__) ) . '">Settings</a>',
 		 );
 		return array_merge( $links, $mylinks );
+	}
+
+	function determine_plugin_location() {
+		$location_array = explode(DIRECTORY_SEPARATOR,plugin_basename(__FILE__));
+		$location = $location_array[count($location_array)-2].DIRECTORY_SEPARATOR.$location_array[count($location_array)-1];
+		return $location;
 	}
 
 }

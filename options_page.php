@@ -1,6 +1,6 @@
 <?php
 // figure out where we are stored
-$location = explode('/',plugin_basename(__FILE__))[0].'/player-card.php';
+$location = $pppc->determine_plugin_location();
 ?>
 <form method="post" action="admin.php?page=<?php echo $location;?>">
 

@@ -154,6 +154,28 @@ a:3:{s:8:"duration";s:8:"00:16:30";s:8:"subtitle";s:25:"Interview with Matt Fros
 	}
 
 
+	function test_determine_plugin_location() {
+		$pppc = new PowerpressPlayerCard();
+		$location = $pppc->determine_plugin_location();
+		$location_array = explode(DIRECTORY_SEPARATOR,__FILE__);
+
+		$computed_location = $location_array[count($location_array)-3].DIRECTORY_SEPARATOR.'player-card.php';
+		$this->assertEquals($location,$computed_location);
+		return;
+	}
+
+	function test_inactive_blubrry() {
+		deactivate_plugins('powerpress/powerpress.php');
+		$pppc = new PowerpressPlayerCard();
+		$this->assertTrue(is_plugin_inactive($pppc->determine_plugin_location()));
+		return;
+	}
+
+
+	/*
+	 * Helper Functions
+	 */
+
 	function create_card($media_type) {
 		$returnValue = '';
 		global $wp_query;
