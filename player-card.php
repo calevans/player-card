@@ -11,8 +11,7 @@ Domain Path: /languages
 */
 
 $pppc = new PowerpressPlayerCard();
-register_activation_hook( __FILE__, [$pppc,'activate'] );
-
+register_activation_hook( __FILE__, array($pppc,'activate') );
 
 /*
  * Process the form

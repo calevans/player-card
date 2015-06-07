@@ -60,7 +60,36 @@ a:3:{s:8:"duration";s:8:"00:16:30";s:8:"subtitle";s:25:"Interview with Matt Fros
 		$this->assertTrue( is_plugin_active('player-card/player-card.php'));			
 	}
 
-	function test_can_retrive_post() {
+    function test_resgister_plugin() {
+        global $wpdb;
+        $pppc = new PowerpressPlayerCard();
+
+        // clear everything out
+        delete_option($pppc->option_key);
+        $options = get_option($pppc->option_key);
+        $this->assertEmpty($options);
+        $plugins_to_active = array(
+            'powerpress/powerpress.php'
+        );
+        update_option( 'active_plugins', $plugins_to_active );
+
+        $this->assertFalse(is_plugin_active('player-card/player-card.php'));
+
+        // activate the plugin
+        $plugins_to_active = array(
+            'powerpress/powerpress.php',
+            'player-card/player-card.php'
+        );
+        update_option( 'active_plugins', $plugins_to_active );
+        $pppc->activate();
+        $this->assertTrue(is_plugin_active('player-card/player-card.php'));
+        $options = get_option($pppc->option_key);
+        $this->assertNotEmpty($options);
+
+        return;
+    }
+
+    function test_can_retrive_post() {
 		global $wp_query;
 		$wp_query = new WP_Query( 'p='.$this->post_id['audio']);
 		$pppc = new PowerpressPlayerCard();
